@@ -8,7 +8,7 @@ const { clientId, guildId, token } = require('./config.json');
 const commands = [
     new SlashCommandBuilder()
         .setName('chewybot_open_emporium')
-        .setDescription('Opens the store and sets the selling price of an Ascension Raffle Ticket')
+        .setDescription('Opens the store and sets the selling price of an Ascension Lottery Ticket')
         .setDefaultPermission(false)
         .addIntegerOption(option =>
             option.setName('winners')
@@ -20,17 +20,22 @@ const commands = [
                 .setRequired(true))
         .addIntegerOption(option =>
             option.setName('price')
-                .setDescription('Sets the price of each ascension ticket (autofilled value 4)')
-                .setRequired(false)),
+                .setDescription('Sets the price of each ascension ticket')
+                .setRequired(true)),
 
     new SlashCommandBuilder()
-        .setName('chewybot_close_emporium')
-        .setDescription('Close the store and stops all sales of Ascension Raffle Ticket')
+        .setName('chewybot_pause_sale')
+        .setDescription('Temporarily close the store and stops all sales of Ascension Lottery Ticket')
         .setDefaultPermission(false),
 
     new SlashCommandBuilder()
-        .setName('chewybot_check_supply_and_rrp')
-        .setDescription('Checks the total supply of wishes in circulation and shows Recommended Retail Price (RRP)')
+        .setName('chewybot_resume_sale')
+        .setDescription('Reopen the store and resumes sales of Ascension Lottery Ticket')
+        .setDefaultPermission(false),
+
+    new SlashCommandBuilder()
+        .setName('chewybot_check_wish_supply')
+        .setDescription('Checks the total supply of wishes in circulation and displays a histogram')
         .setDefaultPermission(false)
         .addIntegerOption(option =>
             option.setName('bin_range')
@@ -38,14 +43,18 @@ const commands = [
                 .setRequired(true)),
 
     new SlashCommandBuilder()
-        .setName('chewybot_purchase_ticket')
-        .setDescription('Purchase a Ascesion Raffle Ticket with Ascension Wishes')
+        .setName('chewybot_burn_all_tickets')
+        .setDescription('Returns a list of all Ascension Lottery Ticket Holders and removes the associated roles')
         .setDefaultPermission(false),
 
     new SlashCommandBuilder()
-        .setName('chewybot_burn_all_tickets')
-        .setDescription('Returns a list of all Ascension Raffle Ticket Holders and removes the associated roles')
-        .setDefaultPermission(false),
+        .setName('chewybot_set_no_of_winners')
+        .setDescription('Edits the number of winners')
+        .setDefaultPermission(false)
+        .addIntegerOption(option =>
+            option.setName('winners')
+                .setDescription('sets the number of winners to be drawn')
+                .setRequired(true)),
 ]
     .map(command => command.toJSON());
 
